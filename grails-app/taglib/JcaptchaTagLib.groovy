@@ -19,7 +19,7 @@ class JcaptchaTagLib
 	 * All attributes are valid except "name" and "src", they will be filtered.
 	 */
 	def jpeg = {
-		def link = createLink(controller: "jcaptcha", action: "jpeg", id: it.name)
+		def link = g.createLink(controller: "jcaptcha", action: "jpeg", id: it.name)
 		def attributes = []
 		it.each { key, value -> if (key != "name" && key != "src") attributes << "${key}=\"${value}\"" }
 		out << "<img src=\"${link}\" ${attributes.join(' ')} />"
@@ -36,7 +36,7 @@ class JcaptchaTagLib
 	 * type="audio/x-wav" will be added to the tag.
 	 */	
 	def wav = {
-		def link = createLink(controller: "jcaptcha", action: "wav", id: it.name)
+		def link = g.createLink(controller: "jcaptcha", action: "wav", id: it.name)
 		def attributes = []
 		it.each { key, value -> if (key != "name" && key != "src" & key != "type") attributes << "${key}=\"${value}\"" }
 		out << "<embed src=\"${link}\" type=\"audio/x-wav\" ${attributes.join(' ')} />"
