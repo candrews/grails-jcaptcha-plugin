@@ -10,7 +10,7 @@ class JcaptchaGrailsPlugin {
 	def authorEmail = "ld@ldaley.com"
 	def documentation = "http://grails.org/JCaptcha+Plugin"
 	
-	def version = "0.2"
+	def version = "1.0"
 	def dependsOn = [:]
 	
 	def doWithSpring = { }
