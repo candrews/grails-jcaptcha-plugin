@@ -19,10 +19,12 @@ class JcaptchaTagLib
 	 * All attributes are valid except "name" and "src", they will be filtered.
 	 */
 	def jpeg = {
+		def timeStamp = "" + Calendar.getInstance().getTimeInMillis()
+		timeStamp = timeStamp.substring(0, 10);
 		def link = g.createLink(controller: "jcaptcha", action: "jpeg", id: it.name)
 		def attributes = []
 		it.each { key, value -> if (key != "name" && key != "src") attributes << "${key}=\"${value}\"" }
-		out << "<img src=\"${link}\" ${attributes.join(' ')} />"
+		out << "<img src=\"${link}?id=${timeStamp}\" ${attributes.join(' ')} />"
 	}
 
 	/**

@@ -1,14 +1,16 @@
 import com.octo.captcha.service.CaptchaService;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+
+import javax.imageio.*;
+import javax.imageio.plugins.jpeg.*;
+import javax.imageio.metadata.*;
+import javax.imageio.stream.*;
 
 /**
  * Provides access to the captchas as well as provides some util
@@ -62,10 +64,17 @@ class JcaptchaService
 	 */
 	byte[] challengeAsJpeg(BufferedImage challenge)
 	{
-		def jpegOutputStream = new ByteArrayOutputStream()
-		def jpegEncoder = JPEGCodec.createJPEGEncoder(jpegOutputStream)
-		jpegEncoder.encode(challenge)
-		jpegOutputStream.toByteArray()
+		ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream()
+        ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(jpegOutputStream)
+        ImageWriter jpegEncoder = (ImageWriter) ImageIO.getImageWritersByFormatName("JPEG").next()
+
+        JPEGImageWriteParam param = new JPEGImageWriteParam(null)
+        param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT)
+        param.setCompressionQuality(new Float(1.0).floatValue())
+
+        jpegEncoder.setOutput(imageOutputStream)
+        jpegEncoder.write((IIOMetadata) null, new IIOImage(challenge, null, null), param)
+        jpegOutputStream.toByteArray()
 	}	
 
 	/**
