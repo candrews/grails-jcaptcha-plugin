@@ -1,10 +1,12 @@
+package grails.plugin.jcaptcha;
+
 /**
  * Some convenience tags for 'displaying' captcha challenges. 
  * 
  * @author LD <ld@ldaley.com>
  */
-class JcaptchaTagLib 
-{
+class JcaptchaTagLib {
+    
 	/**
 	 * All tags are <jcaptcha:* />
 	 */

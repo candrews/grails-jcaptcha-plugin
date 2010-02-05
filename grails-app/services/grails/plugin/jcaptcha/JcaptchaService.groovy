@@ -1,3 +1,5 @@
+package grails.plugin.jcaptcha;
+
 import com.octo.captcha.service.CaptchaService;
 
 import java.awt.image.BufferedImage;
@@ -18,8 +20,8 @@ import javax.imageio.stream.*;
  * 
  * @author LD <ld@ldaley.com>
  */
-class JcaptchaService 
-{
+class JcaptchaService {
+
 	/**
 	 * Used to access the captchas defined as part of the app config.
 	 */
@@ -33,8 +35,7 @@ class JcaptchaService
 	 * @throws IllegalStateException If there is no captcha by that name.
 	 * @returns The captcha service keyed by 'captchaName'
 	 */
-	CaptchaService getCaptchaService(String captchaName)
-	{
+	CaptchaService getCaptchaService(String captchaName) {
 		if (captchaName == null) throw IllegalArgumentException("'captchaName' cannot be null")
 		def c = grailsApplication.config.jcaptchas[captchaName]
 		if (c == null) throw new IllegalStateException("There is no jcaptcha defined with name '${captchaName}'")
@@ -50,8 +51,7 @@ class JcaptchaService
 	 * @return True if the response meets the challenge
 	 * @see getCaptchaService()
 	 */
-	boolean validateResponse(captchaName, id, response)
-	{
+	boolean validateResponse(captchaName, id, response) {
 		def c = getCaptchaService(captchaName)
 		c.validateResponseForID(id, response)
 	}
@@ -62,8 +62,7 @@ class JcaptchaService
 	 * @param challenge The image data
 	 * @return A raw bunch of bytes which come together to be a JPEG.
 	 */
-	byte[] challengeAsJpeg(BufferedImage challenge)
-	{
+	byte[] challengeAsJpeg(BufferedImage challenge) {
 		ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream()
         ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(jpegOutputStream)
         ImageWriter jpegEncoder = (ImageWriter) ImageIO.getImageWritersByFormatName("JPEG").next()
@@ -83,8 +82,7 @@ class JcaptchaService
 	 * @param challenge The sound data
 	 * @return A raw bunch of bytes which come together to be a WAV.
 	 */	
-	byte[] challengeAsWav(AudioInputStream challenge)
-	{
+	byte[] challengeAsWav(AudioInputStream challenge) {
 		ByteArrayOutputStream soundOutputStream = new ByteArrayOutputStream()
 		AudioSystem.write(challenge, AudioFileFormat.Type.WAVE, soundOutputStream)
 		soundOutputStream.flush()
