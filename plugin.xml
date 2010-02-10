@@ -6,9 +6,9 @@
   <documentation>http://grails.org/JCaptcha+Plugin</documentation>
   <resources>
     <resource>UrlMappings</resource>
-    <resource>grails.plugin.jcaptcha.JcaptchaController</resource>
-    <resource>grails.plugin.jcaptcha.JcaptchaService</resource>
-    <resource>grails.plugin.jcaptcha.JcaptchaTagLib</resource>
+    <resource>org.grails.plugin.jcaptcha.JcaptchaController</resource>
+    <resource>org.grails.plugin.jcaptcha.JcaptchaService</resource>
+    <resource>org.grails.plugin.jcaptcha.JcaptchaTagLib</resource>
   </resources>
   <dependencies>
     <resolvers>
