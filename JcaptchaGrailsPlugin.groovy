@@ -1,6 +1,6 @@
 /**
  * Simplest. Plugin. Class. Ever.
- * 
+ *
  * @author LD <ld@ldaley.com>
  */
 class JcaptchaGrailsPlugin {
@@ -8,15 +8,12 @@ class JcaptchaGrailsPlugin {
 	def description = 'Makes using JCaptcha within a Grails app simple'
 	def author = "Luke Daley"
 	def authorEmail = "ld@ldaley.com"
-	def documentation = "http://grails.org/JCaptcha+Plugin"
-	
+	def documentation = "http://grails.org/plugin/jcaptcha"
+
 	def version = "1.1"
-	def dependsOn = [:]
-	
-	def doWithSpring = { }
-	def doWithApplicationContext = { applicationContext -> }
-	def doWithWebDescriptor = { xml -> }
-	def doWithDynamicMethods = { ctx -> }
-	def onChange = { event -> }
-	def onApplicationChange = { event -> }
+	def grailsVersion = "2.0 > *"
+
+	def license = "APACHE"
+	def issueManagement = [system: 'GitHub', url: 'https://github.com/alkemist/grails-jcaptcha-plugin/issues']
+	def scm = [url: 'https://github.com/alkemist/grails-jcaptcha-plugin']
 }
