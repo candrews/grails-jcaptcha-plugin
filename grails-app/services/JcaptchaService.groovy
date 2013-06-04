@@ -35,7 +35,7 @@ class JcaptchaService
 	 */
 	CaptchaService getCaptchaService(String captchaName)
 	{
-		if (captchaName == null) throw IllegalArgumentException("'captchaName' cannot be null")
+		if (captchaName == null) throw new IllegalArgumentException("'captchaName' cannot be null")
 		def c = grailsApplication.config.jcaptchas[captchaName]
 		if (c == null) throw new IllegalStateException("There is no jcaptcha defined with name '${captchaName}'")
 		c
@@ -65,16 +65,16 @@ class JcaptchaService
 	byte[] challengeAsJpeg(BufferedImage challenge)
 	{
 		ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream()
-        ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(jpegOutputStream)
-        ImageWriter jpegEncoder = (ImageWriter) ImageIO.getImageWritersByFormatName("JPEG").next()
+		ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(jpegOutputStream)
+		ImageWriter jpegEncoder = (ImageWriter) ImageIO.getImageWritersByFormatName("JPEG").next()
 
-        JPEGImageWriteParam param = new JPEGImageWriteParam(null)
-        param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT)
-        param.setCompressionQuality(new Float(1.0).floatValue())
+		JPEGImageWriteParam param = new JPEGImageWriteParam(null)
+		param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT)
+		param.setCompressionQuality(new Float(1.0).floatValue())
 
-        jpegEncoder.setOutput(imageOutputStream)
-        jpegEncoder.write((IIOMetadata) null, new IIOImage(challenge, null, null), param)
-        jpegOutputStream.toByteArray()
+		jpegEncoder.setOutput(imageOutputStream)
+		jpegEncoder.write((IIOMetadata) null, new IIOImage(challenge, null, null), param)
+		jpegOutputStream.toByteArray()
 	}	
 
 	/**
