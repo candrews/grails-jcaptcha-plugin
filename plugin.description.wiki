@@ -1,5 +1,7 @@
 h1. JCaptcha Plugin
 
+Makes using JCaptcha within a Grails app simple.
+
 h2. JCaptcha
 
 [JCaptcha|http://jcaptcha.sourceforge.net/] is an open source (LGPL) [captcha|http://en.wikipedia.org/wiki/Captcha] solution. JCaptcha provides visual and audio challenges and could be extended to provide different kinds of challenges if you desire.
@@ -103,8 +105,8 @@ h3. JCaptcha Tags
 
 The plugin makes tags available for jpeg and wav challenges.
 {code}
-<jcaptcha:jpeg name="<captchaname>" height="Xpx" width="Xpx" />    // results in an img tag
-<jcaptcha:wav name="<captchaname>" autostart="0" />    // results in an embed tag
+<jcaptcha:jpeg name="<captchaname>" height="Xpx" width="Xpx" />    <!-- results in an img tag -->
+<jcaptcha:wav name="<captchaname>" autostart="0" />    <!-- results in an embed tag -->
 {code}
 You can pass any other attributes that are accepted by the underlying HTML tags to the tags.
 
