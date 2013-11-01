@@ -1,15 +1,16 @@
 h1. JCaptcha Plugin
 
-
 h2. JCaptcha
 
 [JCaptcha|http://jcaptcha.sourceforge.net/] is an open source (LGPL) [captcha|http://en.wikipedia.org/wiki/Captcha] solution. JCaptcha provides visual and audio challenges and could be extended to provide different kinds of challenges if you desire.
 
 h2. Versions
-
-||Version||Minimum Grails Version||Notes||
-| 0.1 | 0.6 | |
-| 0.2 | 1.0-RC1 | |
+{table}
+*Version*|*Minimum Grails Version*
+ 0.1 | 0.6
+ 0.2 | 1.0-RC1
+ 0.2.1 | 1.2.1
+{table}
 
 h2. The Plugin
 
@@ -17,7 +18,7 @@ The Grails JCaptcha plugin provides an easy way to define Captchas, display them
 
 h2. Installation
 
-The plugin is available from the official repository so can be installed via ...
+The plugin is available from the official repository so can be installed via...
 {code}
 grails install-plugin jcaptcha
 {code}
@@ -27,15 +28,11 @@ h2. Usage
 
 h3. Defining Captchas
 
-Captchas are defined in the grails-app/conf/Config.groovy file.
+Captchas are defined in the @grails-app/conf/Config.groovy@ file.
 {code}
-log4j {
-    /* log4j config */
-}
-
 jcaptchas {
-    captcha1 = ...
-    captcha2 = ...
+	captcha1 = ...
+	captcha2 = ...
 }
 {code}
 Each jcaptcha.\* entry must be an instance of [CaptchaService|http://jcaptcha.sourceforge.net/multiproject/jcaptcha-service/apidocs/com/octo/captcha/service/CaptchaService.html] which is responsible for generating challenges and verifying responses.
@@ -58,17 +55,17 @@ import com.octo.captcha.component.image.textpaster.NonLinearTextPaster
 import com.octo.captcha.service.sound.DefaultManageableSoundCaptchaService
 
 jcaptchas {
-  imageCaptcha = new GenericManageableCaptchaService(
+	imageCaptcha = new GenericManageableCaptchaService(
 		new GenericCaptchaEngine(
 			new GimpyFactory(
 				new RandomWordGenerator(
-					"abcdefghijklmnopqrstuvwxyz1234567890"
+					'abcdefghijklmnopqrstuvwxyz1234567890'
 				),
 				new ComposedWordToImage(
 					new RandomFontGenerator(
 						20, // min font size
 						30, // max font size
-						[new Font("Arial", 0, 10)] as Font[]
+						[new Font('Arial', 0, 10)] as Font[]
 					),
 					new GradientBackgroundGenerator(
 						140, // width
@@ -95,9 +92,9 @@ Construction/configuration of captcha services is part of JCaptcha itself so ref
 
 h3. JCaptcha Controller
 
-The plugin installs a controller called 'JCaptchaController'. It's function is to *render* captcha challenges. It currently supports two rendering formats: jpeg and wav.
+The plugin installs a controller called @JCaptchaController@ . It's function is to *render* captcha challenges. It currently supports two rendering formats: jpeg and wav.
 
-The controller supports URIs like {{jcaptcha/jpeg/<captchaname>}} and {{jcaptcha/wav/<captchaname>}} which will write the binary output to the output stream.
+The controller supports URIs like @jcaptcha/jpeg/<captchaname>@ and @jcaptcha/wav/<captchaname>@ which will write the binary output to the output stream.
 {note:title=You can't render images as WAV}
 Make sure that you don't try and render image captchas as sound or vice versa. If you attempt this you will get an IllegalArgumentException.
 {note}
@@ -106,8 +103,8 @@ h3. JCaptcha Tags
 
 The plugin makes tags available for jpeg and wav challenges.
 {code}
-<jcaptcha:jpeg name="<captchaname>" height="Xpx" width="Xpx" /> // results in an img tag
-<jcaptcha:wav name="<captchaname>" autostart="0" /> // results in an embed tag
+<jcaptcha:jpeg name="<captchaname>" height="Xpx" width="Xpx" />    // results in an img tag
+<jcaptcha:wav name="<captchaname>" autostart="0" />    // results in an embed tag
 {code}
 You can pass any other attributes that are accepted by the underlying HTML tags to the tags.
 
@@ -115,24 +112,22 @@ h3. JCaptcha Service
 
 The JCaptchaService class is responsible for obtaining the instances of CaptchaService defined in your config. It is also used for verifying responses to challenges.
 {code}
-class ExampleController
-{
-    def jcaptchaService
+class ExampleController {
 
-    def index = {
-        if (jcaptchaService.validateResponse("captchaName", session.id, params.captchaResponse))
-        {
-            /* User entered response correctly
-        }
-        else
-        {
-            /* User got it wrong, OR THEY ARE A BOT!!!! Let's get em.
-        }
-    }
+	def jcaptchaService
+
+	def index() {
+		if (jcaptchaService.validateResponse('captchaName', session.id, params.captchaResponse)) {
+			// User entered response correctly
+		} else {
+			// User got it wrong, OR THEY ARE A BOT!
+		}
+	}
 }
 {code}
-Notice that you need to pass {{session.id}} to {{validateResponse}}. This is because the captcha service needs to match the response to the challenge to check the answer. The key between the two is {{session.id}}.
+Notice that you need to pass @session.id@ to @validateResponse@ . This is because the captcha service needs to match the response to the challenge to check the answer.
+The key between the two is @session.id@ .
 
 h2. Example Application
 
-Here is a fully functional [example application|http://docs.codehaus.org/download/attachments/9765063/jcaptcha-plugin-example-app.zip?version=1] that uses the JCaptcha plugin.
+Here is a fully functional [example application|https://github.com/stokito/grails-jcaptcha-demo] that uses the JCaptcha plugin.
