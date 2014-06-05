@@ -14,18 +14,14 @@ grails.project.dependency.resolution = {
 		grailsCentral()
 		mavenLocal()
 		mavenCentral()
+
+		//com.jhlabs:imaging (a dependency of 'com.octo.captcha:jcaptcha:1.0') is not in Maven Central. Reported issue at https://issues.sonatype.org/browse/MVNCENTRAL-463 
 		mavenRepo 'http://maven.jahia.org/maven2/'
 	}
 
 	dependencies {
 
-		compile 'com.octo.captcha:jcaptcha-api:1.0'
-
-		compile 'com.octo.captcha:jcaptcha:1.0', {
-			excludes 'commons-collections', 'commons-logging', 'imaging', 'jcaptcha-api', 'jcaptcha-common-test', 'servlet-api'
-		}
-
-		compile 'com.jhlabs:imaging:01012005'
+		compile 'com.octo.captcha:jcaptcha:1.0'
 	}
 
 	plugins {
