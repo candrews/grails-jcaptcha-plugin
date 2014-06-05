@@ -1,0 +1,18 @@
+language: groovy
+jdk:
+- oraclejdk7
+before_script:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- rm -rf target
+script: ./travis-build.sh
+env:
+  global:
+  - GIT_NAME="Craig Andrews"
+  - GIT_EMAIL="candrews@integralblue.com"
+  # travis encrypt -a env.global 'GRAILS_CENTRAL_USERNAME=myusername'
+  # travis encrypt -a env.global 'GRAILS_CENTRAL_PASSWORD=mypassword'
+  # travis encrypt -a env.global 'GH_TOKEN=token' # get the token from https://github.com/settings/applications
+  - secure: Blx9sYNrcuvtLrI381eiUJJ4AhVuDbHILrpQlY60+7pLHFbyf/aGl+miH58Pis4I/CsZSVvrXUIyU7PHPEq8q+LnCdhstDKSeDtjgbuyQvTVfk+ROIirQRJ4MpRXFUz3oUxnlXf/1HtDsW9JW99oaiCJNwjdCHs5xxaqCqYT56Q=
+  - secure: XIINqvTHQ8+QQiJYA99R22r9wsZ6BU2Skj0DLYjzwW51LO6yFsNgd0/ygXTfMgDD6otoC+G7aqY0xdGV0YQwr/V39pbQcRPvPcVlgG5SvpjlKu3BwhnKG8NFnK5lEoTjoeXTjukMWy7QZvKfBvO5AMecMco1zGVhbYnI0CRb5g4=
+  - secure: P/024LmipKek4x1bDO8OY0+h3w0Z07tPEbgbS21EU9jc5evYGTXH1sEQcbx6ARCwHqaFdlm4bJAeLzVJDd+C/BjZwQPyooAen60UpyuCN+BAgxVAdxtmUVdCD6jjjE3+Mm/gNzhyUiIgSrvrfBUq+K0/1cblDn1queqci8DHzsE=
