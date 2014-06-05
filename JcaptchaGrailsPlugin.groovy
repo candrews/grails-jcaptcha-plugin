@@ -14,6 +14,6 @@ class JcaptchaGrailsPlugin {
 	def grailsVersion = "2.0 > *"
 
 	def license = "APACHE"
-	def issueManagement = [system: 'GitHub', url: 'https://github.com/alkemist/grails-jcaptcha-plugin/issues']
-	def scm = [url: 'https://github.com/alkemist/grails-jcaptcha-plugin']
+	def issueManagement = [system: 'GitHub', url: 'https://github.com/candrews/grails-jcaptcha-plugin/issues']
+	def scm = [url: 'https://github.com/candrews/grails-jcaptcha-plugin']
 }
