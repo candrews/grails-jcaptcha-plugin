@@ -1,3 +1,5 @@
+package org.grails.plugin.jcaptcha;
+
 import java.awt.image.BufferedImage;
 import javax.sound.sampled.AudioInputStream;
 

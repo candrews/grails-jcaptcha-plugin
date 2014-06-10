@@ -1,3 +1,5 @@
+package org.grails.plugin.jcaptcha;
+
 /**
  * Some convenience tags for 'displaying' captcha challenges. 
  * 

@@ -1,3 +1,5 @@
+package org.grails.plugin.jcaptcha;
+
 import com.octo.captcha.service.CaptchaService;
 
 import java.awt.image.BufferedImage;
