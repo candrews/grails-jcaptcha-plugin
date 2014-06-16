@@ -22,8 +22,9 @@ grails.project.dependency.resolution = {
 	dependencies {
 
 		compile('com.octo.captcha:jcaptcha:1.0') {
-			excludes 'servlet-api'
+			excludes 'servlet-api', 'imaging'
 		}
+		compile('com.jhlabs:filters:2.0.235-1')
 	}
 
 	plugins {
