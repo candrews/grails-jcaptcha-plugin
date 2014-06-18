@@ -67,16 +67,22 @@ class JcaptchaService
 	byte[] challengeAsJpeg(BufferedImage challenge)
 	{
 		ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream()
-		ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(jpegOutputStream)
-		ImageWriter jpegEncoder = (ImageWriter) ImageIO.getImageWritersByFormatName("JPEG").next()
-
-		JPEGImageWriteParam param = new JPEGImageWriteParam(null)
-		param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT)
-		param.setCompressionQuality(new Float(1.0).floatValue())
-
-		jpegEncoder.setOutput(imageOutputStream)
-		jpegEncoder.write((IIOMetadata) null, new IIOImage(challenge, null, null), param)
-		jpegOutputStream.toByteArray()
+		try{
+			ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(jpegOutputStream)
+			try{
+				ImageWriter jpegEncoder = (ImageWriter) ImageIO.getImageWritersByFormatName("JPEG").next()
+				JPEGImageWriteParam param = new JPEGImageWriteParam(null)
+				param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT)
+				param.setCompressionQuality(new Float(1.0).floatValue())
+				jpegEncoder.setOutput(imageOutputStream)
+				jpegEncoder.write((IIOMetadata) null, new IIOImage(challenge, null, null), param)
+				return jpegOutputStream.toByteArray()
+			}finally{
+				imageOutputStream.close()
+			}
+		}finally{
+			jpegOutputStream.close()
+		}
 	}	
 
 	/**
