@@ -4,6 +4,7 @@ import com.octo.captcha.service.CaptchaService;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Field;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -13,6 +14,8 @@ import javax.imageio.*;
 import javax.imageio.plugins.jpeg.*;
 import javax.imageio.metadata.*;
 import javax.imageio.stream.*;
+
+import org.springframework.util.ReflectionUtils;
 
 /**
  * Provides access to the captchas as well as provides some util
@@ -40,7 +43,23 @@ class JcaptchaService
 		if (captchaName == null) throw new IllegalArgumentException("'captchaName' cannot be null")
 		def c = grailsApplication.config.jcaptchas[captchaName]
 		if (c == null) throw new IllegalStateException("There is no jcaptcha defined with name '${captchaName}'")
-		c
+		try{
+			//workaround for "java.lang.IllegalStateException: Syllable relation has already been set." See http://sourceforge.net/p/freetts/discussion/137669/thread/13b2f26b
+			def freeTTSWordToSound = (c.getEngine().getFactories()[0]).getWordToSound()
+			synchronized(freeTTSWordToSound){
+				def voice = (com.sun.speech.freetts.Voice) freeTTSWordToSound.defaultVoice
+				Field field = ReflectionUtils.findField(com.sun.speech.freetts.Voice, 'externalOutputQueue')
+				ReflectionUtils.makeAccessible(field)
+				if(! ReflectionUtils.getField(field,voice)){
+					System.out.println("SETTING")
+					voice.setOutputQueue(com.sun.speech.freetts.Voice.createOutputThread())
+				}
+				voice.utteranceProcessors.clear()
+			}
+		}catch(Exception e){
+			//e.printStackTrace()
+		}
+		return c
 	}
 
 	/**
@@ -93,10 +112,14 @@ class JcaptchaService
 	 */	
 	byte[] challengeAsWav(AudioInputStream challenge)
 	{
-		ByteArrayOutputStream soundOutputStream = new ByteArrayOutputStream()
-		AudioSystem.write(challenge, AudioFileFormat.Type.WAVE, soundOutputStream)
-		soundOutputStream.flush()
-		soundOutputStream.close()
-		soundOutputStream.toByteArray()
+		try{
+			ByteArrayOutputStream soundOutputStream = new ByteArrayOutputStream()
+			AudioSystem.write(challenge, AudioFileFormat.Type.WAVE, soundOutputStream)
+			soundOutputStream.flush()
+			soundOutputStream.close()
+			soundOutputStream.toByteArray()
+		}finally{
+			challenge.close()
+		}
 	}
 }

@@ -1,7 +1,12 @@
 package org.grails.plugin.jcaptcha;
 
 import java.awt.image.BufferedImage;
+
 import javax.sound.sampled.AudioInputStream;
+
+import org.codehaus.groovy.grails.web.util.WebUtils;
+
+import com.octo.captcha.service.CaptchaService;
 
 /**
  * Exposes actions that 'render' captcha challenges.
@@ -14,51 +19,49 @@ import javax.sound.sampled.AudioInputStream;
  */
 class JcaptchaController 
 {
-	def jcaptchaService
+	JcaptchaService jcaptchaService
 	
-	def captcha
-	def captchaName
-	def challenge
-	def data
-	
-	def beforeInterceptor = {
-		if (params.id == null) throw new IllegalStateException("JcaptchaController action called with no id (captcha name)")
-		captchaName = params.id
-		captcha = jcaptchaService.getCaptchaService(captchaName)
-		challenge = captcha.getChallengeForID(session.id, request.locale)
-	}
-	
-	def jpeg = {
-		
+	def jpeg(String id) {
+		if (id == null) throw new IllegalStateException("JcaptchaController action called with no id (captcha name)")
+		CaptchaService captcha = jcaptchaService.getCaptchaService(id)
+		Object challenge = captcha.getChallengeForID(session.id, request.locale)
 		if (challenge instanceof BufferedImage)
 		{
+			WebUtils.retrieveGrailsWebRequest().setRenderView(false)
 			response.contentType = "image/jpeg"
-			data = jcaptchaService.challengeAsJpeg(challenge)
+			byte[] data = jcaptchaService.challengeAsJpeg(challenge)
+			response.setHeader("Cache-Control", "no-cache, no-store,must-revalidate,max-age=0")
+			response.setHeader("Content-Length", data.length as String)
+			response.setDateHeader("Expires", 0)
+			response.outputStream.write(data)
+			response.outputStream.flush()
+			response.outputStream.close()
 		}
 		else
 		{
-			throw new IllegalArgumentException("Cannot render challenge ofcaptcha '${captchaName}' as JPEG as it is not an image")
+			throw new IllegalArgumentException("Cannot render challenge ofcaptcha '${id}' as JPEG as it is not an image")
 		}
 	}
 	
-	def wav = {
+	def wav(String id) {
+		if (id == null) throw new IllegalStateException("JcaptchaController action called with no id (captcha name)")
+		CaptchaService captcha = jcaptchaService.getCaptchaService(id)
+		Object challenge = captcha.getChallengeForID(session.id, request.locale)
 		if (challenge instanceof AudioInputStream)
 		{
+			WebUtils.retrieveGrailsWebRequest().setRenderView(false)
 			response.contentType = "audio/x-wav"
-			data = jcaptchaService.challengeAsWav(challenge)
+			byte[] data = jcaptchaService.challengeAsWav(challenge)
+			response.setHeader("Cache-Control", "no-cache, no-store,must-revalidate,max-age=0")
+			response.setHeader("Content-Length", data.length as String)
+			response.setDateHeader("Expires", 0)
+			response.outputStream.write(data)
+			response.outputStream.flush()
+			response.outputStream.close()
 		}
 		else
 		{
-			throw new IllegalArgumentException("Cannot render challenge of captcha '${captchaName}' as WAV as it is not audio")
+			throw new IllegalArgumentException("Cannot render challenge of captcha '${id}' as WAV as it is not audio")
 		}
-	}
-	
-	def afterInterceptor = {
-		response.setHeader("Cache-Control", "no-cache, no-store,must-revalidate,max-age=0")
-		response.setHeader("Content-Length", data.length as String)
-		response.setDateHeader("Expires", 0)
-		response.outputStream.write(data)
-		response.outputStream.flush()
-		response.outputStream.close()
 	}
 }
