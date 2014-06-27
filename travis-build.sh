@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
-./grailsw refresh-dependencies --non-interactive
-./grailsw test-app --non-interactive
-./grailsw package-plugin --non-interactive
-./grailsw doc --pdf --non-interactive
+./grailsw refresh-dependencies --non-interactive --stacktrace
+./grailsw test-app --non-interactive --stacktrace
+./grailsw package-plugin --non-interactive --stacktrace
+./grailsw doc --pdf --non-interactive --stacktrace
 if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_REPO_SLUG == 'candrews/grails-jcaptcha-plugin' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
   git config --global user.name "$GIT_NAME"
   git config --global user.email "$GIT_EMAIL"
@@ -18,7 +18,7 @@ if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_REPO_SLUG == 'candrews/grails-jcaptc
   git push origin HEAD
   cd ..
   rm -rf gh-pages
-  ./grailsw publish-plugin --no-scm --allow-overwrite --non-interactive
+  ./grailsw publish-plugin --no-scm --allow-overwrite --non-interactive --stacktrace
 else
   echo "Not on master branch, so not publishing"
 fi
