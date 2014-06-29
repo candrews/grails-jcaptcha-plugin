@@ -16,7 +16,7 @@ grails.project.dependency.resolution = {
 		mavenLocal()
 		mavenCentral()
 
-		//com.jhlabs:imaging (a dependency of 'com.octo.captcha:jcaptcha:1.0') is not in Maven Central. Reported issue at https://issues.sonatype.org/browse/MVNCENTRAL-463 
+		//com.jhlabs:imaging (a dependency of 'com.octo.captcha:jcaptcha:1.0') is not in Maven Central. Reported issue at https://issues.sonatype.org/browse/MVNCENTRAL-463
 		mavenRepo 'http://maven.jahia.org/maven2/'
 
 		//org.mobicents.external.freetts:freetts:1.2.2 is not in Maven Central.
@@ -26,11 +26,11 @@ grails.project.dependency.resolution = {
 	dependencies {
 
 		compile('com.octo.captcha:jcaptcha:1.0') {
-			excludes 'servlet-api', 'imaging'
+			excludes 'javax.servlet:servlet-api', 'com.jhlabs:imaging'
 		}
 		compile('com.jhlabs:filters:2.0.235-1')
 		compile('com.octo.captcha:jcaptcha-extension-sound-freetts:1.0'){
-			excludes 'servlet-api', 'freetts', 'imaging'
+			excludes 'com.octo.captcha:jcaptcha-common-test','com.sun.speech.freetts:freetts', 'com.octo.captcha:jcaptcha','com.jhlabs:imaging'
 		}
         compile('org.mobicents.external.freetts:freetts:1.2.2',
             'org.mobicents.external.freetts:cmu_time_awb:1.2.2',
