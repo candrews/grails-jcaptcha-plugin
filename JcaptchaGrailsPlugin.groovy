@@ -10,7 +10,7 @@ class JcaptchaGrailsPlugin {
 	def authorEmail = "ld@ldaley.com"
 	def documentation = "http://grails.org/plugin/jcaptcha"
 
-	def version = "1.5.0-SNAPSHOT"
+	def version = "1.5.0"
 	def grailsVersion = "2.0 > *"
 
 	def license = "APACHE"
