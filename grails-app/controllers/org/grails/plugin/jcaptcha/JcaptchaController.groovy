@@ -33,9 +33,8 @@ class JcaptchaController
 			response.setHeader("Cache-Control", "no-cache, no-store,must-revalidate,max-age=0")
 			response.setContentLength(data.length)
 			response.setDateHeader("Expires", 0)
-			response.outputStream.write(data)
-			response.outputStream.flush()
-			response.outputStream.close()
+			response.outputStream << data
+			return null
 		}
 		else
 		{
@@ -55,9 +54,8 @@ class JcaptchaController
 			response.setHeader("Cache-Control", "no-cache, no-store,must-revalidate,max-age=0")
 			response.setContentLength(data.length)
 			response.setDateHeader("Expires", 0)
-			response.outputStream.write(data)
-			response.outputStream.flush()
-			response.outputStream.close()
+			response.outputStream << data
+			return null
 		}
 		else
 		{
