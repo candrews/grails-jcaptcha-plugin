@@ -31,7 +31,7 @@ class JcaptchaController
 			response.contentType = "image/jpeg"
 			byte[] data = jcaptchaService.challengeAsJpeg(challenge)
 			response.setHeader("Cache-Control", "no-cache, no-store,must-revalidate,max-age=0")
-			response.setHeader("Content-Length", data.length as String)
+			response.setContentLength(data.length)
 			response.setDateHeader("Expires", 0)
 			response.outputStream.write(data)
 			response.outputStream.flush()
@@ -53,7 +53,7 @@ class JcaptchaController
 			response.contentType = "audio/x-wav"
 			byte[] data = jcaptchaService.challengeAsWav(challenge)
 			response.setHeader("Cache-Control", "no-cache, no-store,must-revalidate,max-age=0")
-			response.setHeader("Content-Length", data.length as String)
+			response.setContentLength(data.length)
 			response.setDateHeader("Expires", 0)
 			response.outputStream.write(data)
 			response.outputStream.flush()
