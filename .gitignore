@@ -18,3 +18,6 @@ plugin.xml
 
 # used by Grails normally, but not by this plugin. Grails keeps creating the directory, but since we don't use or want it, ignore it.
 web-app/WEB-INF/
+/build/
+/.gradle/
+grails-jcaptcha-plugin.iml
