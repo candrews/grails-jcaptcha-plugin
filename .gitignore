@@ -20,5 +20,4 @@ plugin.xml
 web-app/WEB-INF/
 /build/
 /.gradle/
-gradle.properties
 grails-jcaptcha-plugin.iml
