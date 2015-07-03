@@ -1,11 +1,8 @@
-package org.grails.plugin.jcaptcha;
+package org.grails.plugin.jcaptcha
 
+import org.grails.web.util.WebUtils;
 import java.awt.image.BufferedImage;
-
 import javax.sound.sampled.AudioInputStream;
-
-import org.codehaus.groovy.grails.web.util.WebUtils;
-
 import com.octo.captcha.service.CaptchaService;
 
 /**

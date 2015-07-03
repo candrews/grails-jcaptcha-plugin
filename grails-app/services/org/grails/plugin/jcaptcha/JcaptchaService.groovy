@@ -1,9 +1,9 @@
 package org.grails.plugin.jcaptcha;
 
-import com.octo.captcha.service.CaptchaService;
+import com.octo.captcha.service.CaptchaService
+import grails.core.GrailsApplication;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 
 import javax.sound.sampled.AudioFileFormat;
@@ -28,7 +28,7 @@ class JcaptchaService
 	/**
 	 * Used to access the captchas defined as part of the app config.
 	 */
-	def grailsApplication
+	GrailsApplication grailsApplication
 	
 	/**
 	 * Retrieves a captcha by name.
